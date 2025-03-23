@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Macros</title>
+    <!-- Adicionar meta descrições para SEO -->
+    <meta name="description" content="Calcule quantos macronutrientes você precisa consumir com a FitTrack.">
+    <style>
+        body {
+    background-color: #280057; /* Use hexadecimal para consistência */
+    color: #FFFFFF; /* Use hexadecimal para consistência */
+    font: normal 20pt Arial, sans-serif; /* Adicione fonte alternativa */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    text-align: center; /* Centralize o texto */
+}
+
+header .logo {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+input, select {
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+    </style>
+</head>
+<body>
+    <!-- Cabeçalho com o nome do site -->
+    <header class="header">
+        <div class="logo">FitTrack do Galin</div>
+    </header>
+    
+    <!--Formulário-->
+    <section class="form-section">
+        <div class="container">
+            <h1>Calculadora de Macronutrientes</h1>
+            <form id="fitness-form">
+                <!-- Adicionar rótulos acessíveis e placeholders traduzíveis -->
+                <div class="input-group">
+                    <label for="weight">Peso (kg):</label>
+                    <input type="number" id="weight" placeholder="Ex: 70" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="height">Altura (cm):</label>
+                    <input type="number" id="height" placeholder="Ex: 170" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="training-frequency">Frequência de Treino (dias/semana):</label>
+                    <input type="number" id="training-frequency" placeholder="Ex: 3" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="training-intensity">Intensidade do Treino:</label>
+                    <select id="training-intensity" required>
+                        <option value="leve">Leve</option>
+                        <option value="moderada">Moderada</option>
+                        <option value="intensa">Intensa</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="objective">Objetivo:</label>
+                    <select id="objective" required>
+                        <option value="manter">Manter Peso</option>
+                        <option value="secar">Secar</option>
+                        <option value="ganhar">Ganhar Peso</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn">Calcular</button>
+            </form>
+
+            <div id="results"></div>
+        </div>
+    </section>
+
+    <script>
+        document.getElementById('fitness-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            // Coleta os dados do usuário
+            const weight = parseFloat(document.getElementById('weight').value);
+            const height = parseFloat(document.getElementById('height').value);
+            const trainingFrequency = parseInt(document.getElementById('training-frequency').value);
+            const trainingIntensity = document.getElementById('training-intensity').value;
+            const objective = document.getElementById('objective').value;
+
+            // Cálculo de calorias base (TMB aproximada)
+            let caloriasBase = 25 * weight; // Média de calorias para manutenção
+            let proteinas = 2 * weight;
+            let gorduras = 1 * weight;
+            let carboidratos;
+
+            // Ajuste de acordo com a intensidade do treino
+            if (trainingIntensity === 'moderada') {
+                caloriasBase *= 1.1;
+                proteinas *= 1.2;
+            } else if (trainingIntensity === 'intensa') {
+                caloriasBase *= 1.3;
+                proteinas *= 1.4;
+            }
+
+            // Ajuste conforme o objetivo
+            if (objective === 'secar') {
+                caloriasBase *= 0.8; // Déficit calórico
+                proteinas *= 1.2; // Aumenta proteínas para preservar músculos
+                gorduras *= 0.8; // Reduz gorduras
+            } else if (objective === 'ganhar') {
+                caloriasBase *= 1.2; // Superávit calórico
+                proteinas *= 1.1; // Aumento leve de proteínas
+                gorduras *= 1.2; // Aumento leve de gorduras
+            }
+
+            // Cálculo de carboidratos (preenchendo calorias restantes)
+            let caloriasProteinas = proteinas * 4;
+            let caloriasGorduras = gorduras * 9;
+            let caloriasRestantes = caloriasBase - (caloriasProteinas + caloriasGorduras);
+            carboidratos = caloriasRestantes / 4;
+
+            // Exibe os resultados
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = `
+                <p>Calorias recomendadas: ${caloriasBase.toFixed(2)} kcal</p>
+                <p>Proteínas recomendadas: ${proteinas.toFixed(2)}g</p>
+                <p>Gorduras recomendadas: ${gorduras.toFixed(2)}g</p>
+                <p>Carboidratos recomendados: ${carboidratos.toFixed(2)}g</p>
+            `;
+        });
+    </script>
+</body>
+</html>
