@@ -25,10 +25,3 @@ A Calculadora de Macronutrientes e Treino é uma aplicação web bem básica que
 - Preencha os campos com seus dados
 
 - Clique no botão "Calcular" para obter os resultados
-
-
-## 🤝 Contribuição
-Sinta-se à vontade para contribuir com melhorias! Basta fazer um fork, modificar o código e enviar um pull request.
-
-## 📜 Licença
-Este projeto está sob a licença MIT. Sinta-se livre para usá-lo e modificá-lo conforme necessário.
