@@ -19,7 +19,7 @@ A Calculadora de Macronutrientes e Treino é uma aplicação web bem básica que
 ## 🔧 Como Usar
 - Clone o repositório
 
-- git clone https://github.com/seu-usuario/calculadora-macros.git
+- git clone https://github.com/gentilops/calculadora-macros.git
 - Abra o arquivo index.html em um navegador
 
 - Preencha os campos com seus dados
